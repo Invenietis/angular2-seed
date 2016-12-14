@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var webpackMerge = require('webpack-merge');
+const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 
 module.exports = {
   devtool: 'source-map',
@@ -17,7 +18,10 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.js'],
-    modules: [path.resolve(__dirname, '../node_modules')]
+    modules: [path.resolve(__dirname, '../node_modules')],
+    plugins: [
+      new TsConfigPathsPlugin(/* { tsconfig, compiler } */)
+    ]
   },
   module: {
     loaders: [
