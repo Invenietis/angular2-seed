@@ -8,10 +8,6 @@
     "server": "webpack-dev-server --inline --progress  --content-base src",
     "start": "npm run server"
   },
-  "contributors": [
-    "Rob Wormald <robwormald@gmail.com>",
-    "PatrickJS <github@gdi2290.com>"
-  ],
   "license": "MIT",
   "dependencies": {
     "@angular/common": "~2.2.1",
@@ -24,8 +20,6 @@
     "@angular/platform-browser-dynamic": "~2.2.1",
     "@angular/platform-server": "~2.2.1",
     "@angular/router": "~3.2.1",
-    "@angular/upgrade": "~2.2.1",
-    "angular2-in-memory-web-api": "0.0.21",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "ie-shim": "^0.1.0",
@@ -48,9 +42,7 @@
   },
   "keywords": [
     "Angular2",
-    "angular2-seed",
-    "official angular 2 seed",
-    "official angular2 seed"
+    "angular2-seed"
   ],
   "repository": {
     "type": "git",
