@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --progress",
     "watch": "npm run build -- --watch",
-    "server": "webpack-dev-server --inline --progress  --content-base src",
+    "server": "webpack-dev-server --config config/webpack.dev.config.js --inline --progress --watch --content-base src",
     "start": "npm run server"
   },
   "license": "MIT",
@@ -33,6 +33,7 @@
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^2.2.4",
     "css-loader": "^0.25.0",
+    "html-webpack-plugin": "^2.24.1",
     "raw-loader": "^0.5.1",
     "to-string-loader": "^1.1.4",
     "typescript": "~2.0.10",
