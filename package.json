@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple starter Angular2 project",
   "scripts": {
-    "build": "webpack --progress",
+    "build": "webpack --config config/webpack.prod.config.js  --progress --profile --bail",
     "watch": "npm run build -- --watch",
     "server": "webpack-dev-server --config config/webpack.dev.config.js --inline --progress --watch --content-base src",
     "start": "npm run server"
@@ -39,7 +39,8 @@
     "typescript": "~2.0.10",
     "webpack": "2.1.0-beta.27",
     "webpack-dev-server": "2.1.0-beta.11",
-    "webpack-merge": "^0.15.0"
+    "webpack-merge": "^0.15.0",
+    "webpack-md5-hash": "^0.0.5"
   },
   "keywords": [
     "Angular2",

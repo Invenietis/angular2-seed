@@ -8,6 +8,18 @@ const PORT = process.env.PORT || 3000;
 
 // Webpack Config
 var webpackConfig = {
+  /**
+   * Developer tool to enhance debugging
+   *
+   * See: http://webpack.github.io/docs/configuration.html#devtool
+   * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
+   */
+  devtool: 'cheap-module-source-map',
+  output: {
+    filename: '[name].bundle.js',
+    sourceMapFilename: '[name].map',
+    chunkFilename: '[id].chunk.js'
+  },
 
   devServer: {
     port: PORT,

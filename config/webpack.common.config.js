@@ -7,17 +7,11 @@ const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'source-map',
+
   entry: {
     'polyfills': './src/polyfills.browser.ts',
     'vendor': './src/vendor.browser.ts',
     'main': './src/main.browser.ts',
-  },
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js',
-    sourceMapFilename: '[name].map',
-    chunkFilename: '[id].chunk.js'
   },
 
   resolve: {
