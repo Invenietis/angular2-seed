@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const webpackMerge = require('webpack-merge');
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,6 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'source-map',
   entry: {
+    'polyfills': './src/polyfills.browser.ts',
+    'vendor': './src/vendor.browser.ts',
     'main': './src/main.browser.ts',
   },
   output: {
@@ -51,6 +54,17 @@ module.exports = {
        * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
        */
       new ForkCheckerPlugin(),
+      /*
+       * Plugin: CommonsChunkPlugin
+       * Description: Shares common code between the pages.
+       * It identifies common modules and put them into a commons chunk.
+       *
+       * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
+       * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
+       */
+      new CommonsChunkPlugin({
+        name: ['polyfills', 'vendor'].reverse()
+      }),
       new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
