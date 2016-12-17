@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
+const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -43,6 +44,13 @@ module.exports = {
     ]
   },
   plugins: [
+      /*
+       * Plugin: ForkCheckerPlugin
+       * Description: Do type checking in a separate process, so webpack don't need to wait.
+       *
+       * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
+       */
+      new ForkCheckerPlugin(),
       new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
