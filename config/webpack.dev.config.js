@@ -1,13 +1,13 @@
-var webpack = require('webpack');
-var path = require('path');
-var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.common.config.js');
+const webpack = require('webpack');
+const path = require('path');
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./webpack.common.config.js');
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;
 
 // Webpack Config
-var webpackConfig = {
+const webpackConfig = {
   /**
    * Developer tool to enhance debugging
    *

@@ -1,13 +1,13 @@
-var webpack = require('webpack');
-var path = require('path');
-var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.common.config.js');
+const webpack = require('webpack');
+const path = require('path');
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./webpack.common.config.js');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 const WebpackMd5Hash = require('webpack-md5-hash');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 // Webpack Config
-var webpackConfig = {
+const webpackConfig = {
    /**
      * Developer tool to enhance debugging
      *
