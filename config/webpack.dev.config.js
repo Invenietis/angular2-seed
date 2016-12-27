@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.config.js');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;
@@ -20,6 +21,12 @@ const webpackConfig = {
     sourceMapFilename: '[name].map',
     chunkFilename: '[id].chunk.js'
   },
+  plugins: [
+    /**
+     * DefinePlugin: generates a global object with compile time values.
+     */
+      new DefinePlugin( {webpack:{enableProdMode:false}} ),
+  ],
 
   devServer: {
     port: PORT,

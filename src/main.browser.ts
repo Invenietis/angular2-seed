@@ -1,11 +1,12 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core'; 
 import { AppModule } from './app/app.module';
 
 export const platformRef = platformBrowserDynamic();
 
 export function main() {
-  return platformRef.bootstrapModule(AppModule)
-    .catch(err => console.error(err));
+  if( webpack.enableProdMode ) enableProdMode();
+  return platformRef.bootstrapModule(AppModule).catch(err => console.error(err));
 }
 
 // support async tag or hmr

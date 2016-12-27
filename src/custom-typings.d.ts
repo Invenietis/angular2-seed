@@ -28,3 +28,4 @@ import * as _ from 'lodash'
  * see https://github.com/typings/registry
  *
  */
+declare const webpack: { enableProdMode: boolean };

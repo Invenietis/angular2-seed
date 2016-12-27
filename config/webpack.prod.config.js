@@ -2,9 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.config.js');
-const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 const WebpackMd5Hash = require('webpack-md5-hash');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
+const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 // Webpack Config
 const webpackConfig = {
@@ -17,13 +18,17 @@ const webpackConfig = {
   devtool: 'source-map',
 
   output: {
-      path: path.resolve(__dirname, '../dist'),
+      path: 'dist',
       filename: '[name].[chunkhash].bundle.js',
       sourceMapFilename: '[name].[chunkhash].map',
       chunkFilename: '[id].[chunkhash].chunk.js'
   },
 
   plugins: [
+    /**
+     * DefinePlugin: generates a global object with compile time values.
+     */
+      new DefinePlugin( {webpack:{enableProdMode:true}} ),
      /**
        * Plugin: WebpackMd5Hash
        * Description: Plugin to replace a standard webpack chunkhash with md5.
