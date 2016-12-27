@@ -37,7 +37,13 @@ module.exports = {
         test: /\.html$/, 
         loader: 'raw-loader',
         exclude: [path.resolve(__dirname, '../src/index.html')]
-      }
+      },
+      /* File loader for supporting images, for example, in CSS files.
+        */
+      {
+        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+        use: 'file-loader'
+      },
     ]
   },
   plugins: [
