@@ -58,7 +58,7 @@ const webpackConfig = {
             'rxjs',
           ]
         },
-        dllDir:   path.resolve(__dirname, '../dll'),
+        dllDir: path.resolve(__dirname, '../dll'),
         webpackConfig: webpackMergeDll(commonConfig, {
           devtool: 'cheap-module-source-map',
           plugins: []
