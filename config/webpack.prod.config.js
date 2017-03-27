@@ -54,7 +54,10 @@ const webpackConfig = {
     /**
      * DefinePlugin: generates a global object with compile time values.
      */
-      new DefinePlugin( {webpack:{enableProdMode:true}} ),
+      new DefinePlugin( {
+        'ENV': JSON.stringify(ENV),
+        webpack:{enableProdMode:true}
+      } ),
      /**
        * Plugin: WebpackMd5Hash
        * Description: Plugin to replace a standard webpack chunkhash with md5.

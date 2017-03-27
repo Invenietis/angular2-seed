@@ -30,7 +30,10 @@ const webpackConfig = {
     /**
      * DefinePlugin: generates a global object with compile time values.
      */
-      new DefinePlugin( {webpack:{enableProdMode:false}} ),
+      new DefinePlugin( {
+        'ENV': JSON.stringify(ENV),
+        webpack:{enableProdMode:false}
+      } ),
       new DllBundlesPlugin({
         bundles: {
           polyfills: [
