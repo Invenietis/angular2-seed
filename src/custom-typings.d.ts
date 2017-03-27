@@ -29,3 +29,4 @@ import * as _ from 'lodash'
  *
  */
 declare const webpack: { enableProdMode: boolean };
+declare var ENV: string;

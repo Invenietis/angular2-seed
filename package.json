@@ -44,7 +44,10 @@
     "webpack": "2.3.2",
     "webpack-dev-server": "2.4.2",
     "webpack-merge": "~3.0.0",
-    "webpack-md5-hash": "^0.0.5"
+    "webpack-md5-hash": "^0.0.5",
+    "webpack-dll-bundles-plugin": "^1.0.0-beta.5",
+    "add-asset-html-webpack-plugin": "^1.0.2",
+    "tslib": "^1.6.0"
   },
   "keywords": [
     "Angular2",

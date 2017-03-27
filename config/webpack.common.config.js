@@ -6,12 +6,13 @@ const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPl
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 
 module.exports = {
 
   entry: {
     'polyfills': './src/polyfills.browser.ts',
-    'vendor': './src/vendor.browser.ts',
     'main': './src/main.browser.ts',
   },
 
@@ -91,14 +92,24 @@ module.exports = {
      */
     new CheckerPlugin(),
     
-    /*
-     * Plugin: CommonsChunkPlugin
-     * Description: Shares common code between the pages.
-     * It identifies common modules and put them into a commons chunk.
-     *
-     * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
-     * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
-     */
+      /*
+       * Plugin: CommonsChunkPlugin
+       * Description: Shares common code between the pages.
+       * It identifies common modules and put them into a commons chunk.
+       *
+       * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
+       * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
+       */
+      new CommonsChunkPlugin({
+        name: 'polyfills',
+        chunks: ['polyfills']
+      }),
+      // This enables tree shaking of the vendor modules
+      new CommonsChunkPlugin({
+        name: 'vendor',
+        chunks: ['main'],
+        minChunks: module => /node_modules/.test(module.resource)
+      }),
     new CommonsChunkPlugin({
       name: ['polyfills', 'vendor'].reverse()
     }),
@@ -109,6 +120,7 @@ module.exports = {
       {
         // your Angular Async Route paths relative to this root directory
       }),
+    new LoaderOptionsPlugin({}),
     /*
      * Plugin: HtmlWebpackPlugin
      * Description: Simplifies creation of HTML files to serve your webpack bundles.
@@ -121,6 +133,28 @@ module.exports = {
       template: 'src/index.html',
       chunksSortMode: 'dependency'
     }),
+
+     // Fix Angular 2
+      new NormalModuleReplacementPlugin(
+        /facade(\\|\/)async/,
+        path.resolve(__dirname, '../node_modules/@angular/core/src/facade/async.js')
+      ),
+      new NormalModuleReplacementPlugin(
+        /facade(\\|\/)collection/,
+         path.resolve(__dirname, '../node_modules/@angular/core/src/facade/collection.js')
+      ),
+      new NormalModuleReplacementPlugin(
+        /facade(\\|\/)errors/,
+         path.resolve(__dirname, '../node_modules/@angular/core/src/facade/errors.js')
+      ),
+      new NormalModuleReplacementPlugin(
+        /facade(\\|\/)lang/,
+         path.resolve(__dirname, '../node_modules/@angular/core/src/facade/lang.js')
+      ),
+      new NormalModuleReplacementPlugin(
+        /facade(\\|\/)math/,
+         path.resolve(__dirname, '../node_modules/@angular/core/src/facade/math.js')
+      ),
   ],
   node: {
     global: true,
