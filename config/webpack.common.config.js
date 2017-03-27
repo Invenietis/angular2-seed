@@ -15,7 +15,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.json'],
     modules: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../node_modules')],
     plugins: [
       new TsConfigPathsPlugin(/* { tsconfig, compiler } */)
