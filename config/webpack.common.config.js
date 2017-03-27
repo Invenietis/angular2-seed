@@ -5,6 +5,7 @@ const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 
 module.exports = {
 
@@ -50,6 +51,16 @@ module.exports = {
         test: /\.css$/,
         use: ['to-string-loader', 'css-loader']
       },
+      /*
+      * to string and sass loader support for *.scss files (from Angular components)
+      * Returns compiled css content as string
+      *
+      */
+      {
+        test: /\.scss$/,
+        use: ['to-string-loader', 'css-loader', 'sass-loader'],
+        exclude: [path.resolve(__dirname, '../src/styles')]
+      },
       {
         test: /\.html$/,
         use: 'raw-loader',
@@ -91,7 +102,7 @@ module.exports = {
     new CommonsChunkPlugin({
       name: ['polyfills', 'vendor'].reverse()
     }),
-    new webpack.ContextReplacementPlugin(
+    new ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
       path.resolve(__dirname, '../src'),
@@ -109,7 +120,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       chunksSortMode: 'dependency'
-    })
+    }),
   ],
   node: {
     global: true,

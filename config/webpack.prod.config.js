@@ -23,7 +23,33 @@ const webpackConfig = {
       sourceMapFilename: '[name].[chunkhash].map',
       chunkFilename: '[id].[chunkhash].chunk.js'
   },
+  module: {
+    rules: [
+     /**
+      * Extract CSS files from .src/styles directory to external CSS file
+      */
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        }),
+        include: [helpers.root('src', 'styles')]
+      },
 
+       /**
+        * Extract and compile SCSS files from .src/styles directory to external CSS file
+        */
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader!sass-loader'
+        }),
+        include: [helpers.root('src', 'styles')]
+      }
+    ]
+  },
   plugins: [
     /**
      * DefinePlugin: generates a global object with compile time values.
