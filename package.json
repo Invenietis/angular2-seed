@@ -47,6 +47,7 @@
     "webpack-md5-hash": "^0.0.5",
     "webpack-dll-bundles-plugin": "^1.0.0-beta.5",
     "add-asset-html-webpack-plugin": "^1.0.2",
+    "extract-text-webpack-plugin": "^2.1.0",
     "tslib": "^1.6.0"
   },
   "keywords": [

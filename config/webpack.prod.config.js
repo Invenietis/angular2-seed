@@ -5,6 +5,7 @@ const commonConfig = require('./webpack.common.config.js');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 // Webpack Config
@@ -18,7 +19,7 @@ const webpackConfig = {
   devtool: 'source-map',
 
   output: {
-      path: 'dist',
+      path: path.resolve(__dirname, '../dist'),
       filename: '[name].[chunkhash].bundle.js',
       sourceMapFilename: '[name].[chunkhash].map',
       chunkFilename: '[id].[chunkhash].chunk.js'
@@ -34,7 +35,7 @@ const webpackConfig = {
           fallback: 'style-loader',
           use: 'css-loader'
         }),
-        include: [helpers.root('src', 'styles')]
+        include: [path.resolve(__dirname, '../src', 'styles')]
       },
 
        /**
@@ -46,7 +47,7 @@ const webpackConfig = {
           fallback: 'style-loader',
           use: 'css-loader!sass-loader'
         }),
-        include: [helpers.root('src', 'styles')]
+        include: [path.resolve(__dirname, '../src', 'styles')]
       }
     ]
   },
@@ -74,7 +75,7 @@ const webpackConfig = {
      */
     // NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
      new UglifyJsPlugin({
-        // beautify: true, //debug
+          // beautify: true, //debug
         // mangle: false, //debug
         // dead_code: false, //debug
         // unused: false, //debug
@@ -87,6 +88,7 @@ const webpackConfig = {
         //   unused: false
         // }, // debug
         // comments: true, //debug
+
 
         beautify: false, //prod
         output: {
