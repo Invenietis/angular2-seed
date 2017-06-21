@@ -3,3 +3,5 @@
 /dll/
 /npm-debug.log
 *.log
+compiled/
+package-lock.json

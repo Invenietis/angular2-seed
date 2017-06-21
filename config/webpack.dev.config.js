@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 3000;
 
 // Webpack Config
 const webpackConfig = {
+  entry: {
+    'polyfills': './src/polyfills.browser.ts',
+    'main': './src/main.browser.ts',
+  },
   /**
    * Developer tool to enhance debugging
    *

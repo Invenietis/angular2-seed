@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import CustomValidators from '../forms/CustomValidators';
+import {CustomValidators} from '../forms/CustomValidators';
 
 @Component({
   selector: 'app-contact',

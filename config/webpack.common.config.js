@@ -11,10 +11,7 @@ const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 
 module.exports = {
 
-  entry: {
-    'polyfills': './src/polyfills.browser.ts',
-    'main': './src/main.browser.ts',
-  },
+
 
   resolve: {
     extensions: ['.ts', '.js', '.json'],

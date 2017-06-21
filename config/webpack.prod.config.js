@@ -7,9 +7,12 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
-
 // Webpack Config
 const webpackConfig = {
+  entry: {
+    'polyfills': './src/polyfills.browser.ts',
+    'main': './src/main.browser.aot.ts',
+  },
    /**
      * Developer tool to enhance debugging
      *
@@ -26,6 +29,7 @@ const webpackConfig = {
   },
   module: {
     rules: [
+     
      /**
       * Extract CSS files from .src/styles directory to external CSS file
       */
@@ -75,21 +79,6 @@ const webpackConfig = {
      */
     // NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
      new UglifyJsPlugin({
-          // beautify: true, //debug
-        // mangle: false, //debug
-        // dead_code: false, //debug
-        // unused: false, //debug
-        // deadCode: false, //debug
-        // compress: {
-        //   screw_ie8: true,
-        //   keep_fnames: true,
-        //   drop_debugger: false,
-        //   dead_code: false,
-        //   unused: false
-        // }, // debug
-        // comments: true, //debug
-
-
         beautify: false, //prod
         output: {
           comments: false

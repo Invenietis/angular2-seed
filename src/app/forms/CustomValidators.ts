@@ -1,6 +1,6 @@
 import {FormControl} from '@angular/forms';
 
-export default class CustomValidators {
+export class CustomValidators {
   /**
    * sample from http://blog.thoughtram.io/angular/2016/03/14/custom-validators-in-angular-2.html
    */
