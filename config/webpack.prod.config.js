@@ -1,38 +1,38 @@
 const webpack = require('webpack');
 const path = require('path');
 const webpackMerge = require('webpack-merge');
-const commonConfig = require('./webpack.common.config.js');
+const commonConfigFactory = require('./webpack.common.config.js');
 const WebpackMd5Hash = require('webpack-md5-hash');
-const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const PurifyPlugin = require('@angular-devkit/build-optimizer').PurifyPlugin;
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
+
+const commonConfig = commonConfigFactory({
+  ENV
+});
 // Webpack Config
 const webpackConfig = {
-  entry: {
-    'polyfills': './src/polyfills.browser.ts',
-    'main': './src/main.browser.aot.ts',
-  },
-   /**
-     * Developer tool to enhance debugging
-     *
-     * See: http://webpack.github.io/docs/configuration.html#devtool
-     * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
-     */
+  /**
+   * Developer tool to enhance debugging
+   *
+   * See: http://webpack.github.io/docs/configuration.html#devtool
+   * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
+   */
   devtool: 'source-map',
 
   output: {
-      path: path.resolve(__dirname, '../dist'),
-      filename: '[name].[chunkhash].bundle.js',
-      sourceMapFilename: '[name].[chunkhash].map',
-      chunkFilename: '[id].[chunkhash].chunk.js'
+    path: path.resolve(__dirname, '../dist'),
+    filename: '[name].[chunkhash].bundle.js',
+    sourceMapFilename: '[name].[chunkhash].map',
+    chunkFilename: '[id].[chunkhash].chunk.js'
   },
   module: {
     rules: [
-     
-     /**
-      * Extract CSS files from .src/styles directory to external CSS file
-      */
+
+      /**
+       * Extract CSS files from .src/styles directory to external CSS file
+       */
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
@@ -42,9 +42,9 @@ const webpackConfig = {
         include: [path.resolve(__dirname, '../src', 'styles')]
       },
 
-       /**
-        * Extract and compile SCSS files from .src/styles directory to external CSS file
-        */
+      /**
+       * Extract and compile SCSS files from .src/styles directory to external CSS file
+       */
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract({
@@ -57,19 +57,22 @@ const webpackConfig = {
   },
   plugins: [
     /**
-     * DefinePlugin: generates a global object with compile time values.
+     * Plugin: ExtractTextPlugin
+     * Description: Extracts imported CSS files into external stylesheet
+     *
+     * See: https://github.com/webpack/extract-text-webpack-plugin
      */
-      new DefinePlugin( {
-        'ENV': JSON.stringify(ENV),
-        webpack:{enableProdMode:true}
-      } ),
-     /**
-       * Plugin: WebpackMd5Hash
-       * Description: Plugin to replace a standard webpack chunkhash with md5.
-       *
-       * See: https://www.npmjs.com/package/webpack-md5-hash
-       */
-      new WebpackMd5Hash(),
+    new ExtractTextPlugin('[name].[contenthash].css'),
+
+    new PurifyPlugin(), /* buildOptimizer */
+
+    /**
+     * Plugin: WebpackMd5Hash
+     * Description: Plugin to replace a standard webpack chunkhash with md5.
+     *
+     * See: https://www.npmjs.com/package/webpack-md5-hash
+     */
+    new WebpackMd5Hash(),
     /**
      * Plugin: UglifyJsPlugin
      * Description: Minimize all JavaScript output of chunks.
@@ -78,28 +81,24 @@ const webpackConfig = {
      * See: https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
      */
     // NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
-     new UglifyJsPlugin({
+    new UglifyJsPlugin({
+      sourceMap: false,
+      uglifyOptions: {
         beautify: false, //prod
-        output: {
-          comments: false
-        }, //prod
-        mangle: {
-          screw_ie8: true
-        }, //prod
-        compress: {
-          screw_ie8: true,
-          warnings: false,
-          conditionals: true,
-          unused: true,
-          comparisons: true,
-          sequences: true,
-          dead_code: true,
-          evaluate: true,
-          if_return: true,
-          join_vars: true,
-          negate_iife: false // we need this for lazy v8
+        ecma: 5,
+        warnings: false,
+        ie8: false,
+        mangle: true,
+        compression: {
+          pure_getters: true,
+          passes: 3
         },
-      }),
+        output: {
+          ascii_only: true,
+          comments: false
+        }
+      }
+    }),
   ],
 };
 

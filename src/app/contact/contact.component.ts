@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {CustomValidators} from '../forms/CustomValidators';
+import { CustomValidators } from '../forms/CustomValidators';
 
 @Component({
   selector: 'app-contact',
@@ -9,7 +9,7 @@ import {CustomValidators} from '../forms/CustomValidators';
 })
 export class ContactComponent implements OnInit {
   contactForm: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.contactForm = this.formBuilder.group({
